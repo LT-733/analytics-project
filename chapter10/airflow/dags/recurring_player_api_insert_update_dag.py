@@ -26,7 +26,7 @@ def insert_update_player_data(**context):
         logging.warning("No player data found.")
 
 
-@dag(start_date=datetime.datetime(2024, 8, 7), schedule_interval=None, catchup=False)
+@dag(start_date=datetime.datetime(2024, 8, 7), schedule=None, catchup=False)
 def recurring_player_api_insert_update_dag():
     api_health_check_task = HttpOperator(
         task_id="check_api_health_check_endpoint",
@@ -37,7 +37,7 @@ def recurring_player_api_insert_update_dag():
         response_check=health_check_response,
     )
 
-    temp_min_last_change_date = Variable.get("temp_min_last_change_date")
+    temp_min_last_change_date = Variable.get("temp_min_last_change_date", default_var="2024-01-01")
 
     api_player_query_task = HttpOperator(
         task_id="api_player_query",
@@ -53,7 +53,6 @@ def recurring_player_api_insert_update_dag():
     player_sqlite_upsert_task = PythonOperator(
         task_id="player_sqlite_upsert",
         python_callable=insert_update_player_data,
-        provide_context=True,
     )
 
     # Define the task dependencies

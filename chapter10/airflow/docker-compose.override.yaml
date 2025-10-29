@@ -12,6 +12,7 @@ services:
     environment:
       <<: *airflow-common-env
       AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: 'True'
+      AIRFLOW__WEBSERVER__WTF_CSRF_ENABLED: 'False'
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler

@@ -48,6 +48,7 @@ def recurring_player_api_insert_update_dag():
         ),
         method="GET",
         headers={"Content-Type": "application/json"},
+        response_filter=lambda response: response.text,
     )
 
     player_sqlite_upsert_task = PythonOperator(

@@ -4,7 +4,7 @@ import pandas as pd
 
 
 if 'base_url' not in st.session_state:
-    st.session_state['base_url'] = 'http://localhost:8000'
+    st.session_state['base_url'] = 'https://portfolio-project-elhz.onrender.com'
 
 logging.basicConfig(
     filename='football_app.log',  
